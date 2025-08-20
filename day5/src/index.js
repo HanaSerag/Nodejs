@@ -1,5 +1,6 @@
 // 1. Import the math module
 // and use it in the application
+const math = require('../lib/math');
 
 // TASK 1:
 // Make simple calculator app that asks the user for operation to make
@@ -9,11 +10,14 @@
 // The application will then ask the user if they want to continue.
 // If the user wants to continue, the application will repeat the process.
 // If the user does not want to continue, the application will exit.
-/*
-
+const readline = require('readline');
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
 rl.question("Enter an operation (e.g. 10 * 5): ", (input) => {
-  const parts = input.split(" "); //SPACE IS MUST
+  const parts = input.split(" "); //SPACE IS MUST[10, ,*, , 5]
   const a = Number(parts[0]);
   const op = parts[1];
   const b = Number(parts[2]);
@@ -37,8 +41,8 @@ rl.question("Enter an operation (e.g. 10 * 5): ", (input) => {
 // The user has 5 attempts to guess the number. if the attempt is wrong, the application will print "Try again 🤔" to the console.
 // If the user does not guess the number correctly 5 times, the application will print "You lost the game!! try again 🤔" to the console.
 // If the user guesses the number correctly, the application will print "You won the game!! congrats 🥳🥳" to the console.
-const math = require('../lib/math');
 
+/*
 
 function GUESSTHEGAME() {
   const number = math.randomTo50();
@@ -87,13 +91,8 @@ GUESSTHEGAME();
 // console.log(`Age: ${age}`);
 // console.log(`Favorite language: ${fav || "(not specified)"}`);
 // console.log("----------------\n");
-*/
 
-const readline = require('readline');
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
+
 
 function QUESTIONS() {
   rl.question("What is your name? ", (name) => {
@@ -120,3 +119,4 @@ function QUESTIONS() {
 }
 
 QUESTIONS();
+*/
