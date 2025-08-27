@@ -1,0 +1,10 @@
+[
+    {
+        "firstname": "mai",
+        "lastname": "asaad",
+        "email": "mai@example.com",
+        "age": 20,
+        "course": "nodejs",
+        "status": "active"
+    }
+]
