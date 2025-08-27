@@ -2,7 +2,7 @@ const userData = require('../data/users');
 const tokenData = require('../data/tokens');
 
 const deleteUser = async (req, res) => {
-    const username = req.params.username; // من الـ params مش الـ body
+    const username = req.params.username;
     if (!username) {
         return res.status(400).json({ message: 'Username is required' });
     }
