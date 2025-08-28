@@ -24,8 +24,8 @@ const addProduct = async (req, res) => {
     try {
         const { name, description, price, Quantity } = req.body;
         if (!name || !price) return res.json({ message: "Name and price required" });
-
-        const newProduct = new Product({ name, description, price, Quantity });
+        
+        const newProduct = new Product({ name, description, id : newProduct.length + 1, price, Quantity });
         await newProduct.save();
         return res.json({ message: "Product added successfully", product: newProduct });
     } catch (error) {
