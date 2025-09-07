@@ -11,6 +11,7 @@ module.exports = (app) => {
   const { ForgetPassword, ResetPassword } = require('./Controllers/Auth/Password');
   const { Logout } = require('./Controllers/Auth/Logout');
   const { GetAllCategories, CreateCategory, DeleteCategory } = require("./Controllers/Category");
+  const isAuthenticated = require("./authMiddleware");
 
   // ================== AUTH APIs ==================
   app.post('/auth/register', Register);
@@ -21,7 +22,7 @@ module.exports = (app) => {
   app.delete('/auth/logout', Logout);
 
   // ================== CATEGORIES APIs ==================
-  app.get('/categories', GetAllCategories);
-  app.post('/categories', CreateCategory);
-  app.delete('/categories/:id', DeleteCategory);
+  app.get('/categories', isAuthenticated ,GetAllCategories);
+  app.post('/categories',isAuthenticated, CreateCategory);
+  app.delete('/categories/:id', isAuthenticated ,DeleteCategory);
 };
