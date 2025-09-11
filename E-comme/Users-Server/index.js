@@ -1,14 +1,15 @@
-const express = require('express');
+const express = require("express");
+const mongoose = require("mongoose");
+const usersRoutes = require("./router/usersRoutes");
+
 const app = express();
+app.use(express.json());
 
-app.get('/users', (req, res) => {
-    const users = [
-        { id: 1, name: "Hana" },
-        { id: 2, name: "Omar" }
-    ];
-    res.json(users);
-});
+// استخدام الراوتر
+app.use("/users", usersRoutes);
 
-app.listen(5001, () => {
-    console.log("Users Service running on port 5001");
-});
+mongoose.connect("mongodb://localhost:27017/yourDB")
+  .then(() => {
+    app.listen(5001, () => console.log("Users-Server running on port 5001"));
+  })
+  .catch(err => console.log(err));

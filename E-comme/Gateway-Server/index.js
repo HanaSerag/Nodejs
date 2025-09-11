@@ -4,6 +4,7 @@ require('dotenv').config();
 const cors = require('cors');
 const fetch = require('node-fetch');
 const authRouter = require('./router/authRouter');
+const usersRouter = require("./router/usersRouter");
 
 const app = express();
 app.use(express.json());
@@ -21,7 +22,7 @@ app.use(session({
 }));
 
 app.use('/auth', authRouter);
-
+app.use("/users", usersRouter);
 app.get('/users', async (req, res) => {
     try {
         const token = req.headers['authorization'];
