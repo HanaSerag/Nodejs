@@ -3,7 +3,6 @@ const http = require('http');
 const cors = require('cors');
 const path = require('path');
 const { Server } = require("socket.io");
-require('dotenv').config({ path: path.join(__dirname, ".env") });
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -16,19 +15,37 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './index.html'));
 });
 
-io.on('connection', (socket) => {
-  console.log("A user connected");
+ let users = {};
 
-   socket.on('joinRoom', (room) => {
-    socket.join(room);
-    console.log(`User joined room: ${room}`);
+io.on('connection', (socket) => {
+  console.log("User connected:", socket.id);
+
+
+  socket.on('login', (username) => {
+    users[username] = socket.id; 
+    console.log("Users:", users);
   });
 
-  socket.on('chat message', ({ room, msg }) => {
-    io.to(room).emit('chat message', msg);
+  // To specific person
+  socket.on('private message', ({ to, msg }) => {
+    const targetSocketId = users[to];
+    if (targetSocketId) {
+      io.to(targetSocketId).emit('private message', { from: socket.id, msg });
+    }
+  });
+
+  
+  socket.on('disconnect', () => {
+    for (let username in users) {
+      if (users[username] === socket.id) {
+        delete users[username];
+        break;
+      }
+    }
+    console.log("Users after disconnect:", users);
   });
 });
 
-httpServer.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}.........`);
+httpServer.listen(3000, () => {
+    console.log(`Server is running on port 3000.........`);
 });
