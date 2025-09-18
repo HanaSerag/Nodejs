@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Private Chat</title>
+</head>
+<body>
+  <h3>Login</h3>
+  <input id="username" placeholder="Enter username"/>
+  <button id="loginBtn">Login</button>
+  
+  <h3>Private Chat</h3>
+  <input id="toUser" placeholder="Send to (username)"/>
+  <input id="message" placeholder="Enter message"/>
+  <button id="sendBtn">Send</button>
+
+  <ul id="chat"></ul>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    let myUsername = null;
+
+    document.getElementById("loginBtn").onclick = () => {
+      myUsername = document.getElementById("username").value;
+      socket.emit("login", myUsername);
+    };
+
+    document.getElementById("sendBtn").onclick = () => {
+      const to = document.getElementById("toUser").value;
+      const msg = document.getElementById("message").value;
+      socket.emit("private message", { to, msg });
+    };
+
+    socket.on("private message", ({ from, msg }) => {
+      const chat = document.getElementById("chat");
+      const li = document.createElement("li");
+      li.textContent = `From ${from}: ${msg}`;
+      chat.appendChild(li);
+    });
+  </script>
+</body>
+</html>
